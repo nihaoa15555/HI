@@ -2,12 +2,6 @@
 git clone https://github.com/Zxilly/UA2F.git package/UA2F
 git clone https://github.com/CHN-beta/rkp-ipid.git package/rkp-ipid
 git clone https://github.com/nihaoa15555/hallo.git package/hallo
-# Modify default IP
-#sed -i 's/192.168.1.1/192.168.50.5/g' package/base-files/files/bin/config_generate
-#rm -rf package/lean/luci-theme-argon
-#git clone https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom.git package/lean/luci-theme-infinityfreedom
-# 修改openwrt登陆地址,把下面的192.168.31.1修改成你想要的就可以了
-#sed -i 's/192.168.1.1/10.0.0.1/g' package/base-files/files/bin/config_generate
 
 # 修改主机名字，把YOU-R4A修改你喜欢的就行（不能纯数字或者使用中文）
 sed -i '/uci commit system/i\uci set system.@system[0].hostname='HuaWei'' package/lean/default-settings/files/zzz-default-settings
@@ -17,17 +11,11 @@ sed -i '/uci commit system/i\uci set system.@system[0].hostname='HuaWei'' packag
 sed -i "s/OpenWrt /某不知名人类制作/g" package/lean/default-settings/files/zzz-default-settings
 sed -i "s/Xiaomi Mi Router CR660x/HuaiWei Mate XT 非凡大师/g" target/linux/ramips/dts/mt7621_xiaomi_mi-router-cr660x.dts
 
-# Internal uci firewall chains are flushed and recreated on reload, so
-# put custom rules into the root chains e.g. INPUT or FORWARD or into the
-# special user chains, e.g. input_wan_rule or postrouting_lan_rule.
-
 #删除原默认主题
 rm -rf package/lean/luci-theme-argon
 rm -rf package/lean/luci-theme-bootstrap
 rm -rf package/lean/luci-theme-material
 rm -rf package/lean/luci-theme-netgear
-#rm -rf package/lean/luci-app-privoxy
-#rm -rf package/lean/luci-theme-ifit
 
 #取消原主题luci-theme-bootstrap为默认主题
 sed -i '/set luci.main.mediaurlbase=\/luci-static\/bootstrap/d' feeds/luci/themes/luci-theme-bootstrap/root/etc/uci-defaults/30_luci-theme-bootstrap
@@ -36,20 +24,10 @@ sed -i '/set luci.main.mediaurlbase=\/luci-static\/bootstrap/d' feeds/luci/theme
 #sed -i 's/luci-theme-bootstrap/luci-theme-ifit/g' feeds/luci/collections/luci/Makefile
 sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' ./feeds/luci/collections/luci/Makefile
 
-
-
 # 设置密码为空（安装固件时无需密码登陆，然后自己修改想要的密码）
 #sed -i 's@.*CYXluq4wUazHjmCDBCqXF*@#&@g' package/lean/default-settings/files/zzz-default-settings
 # 修改想要的root密码
 #sed -i 's/root:$1$V4UetPzk$CYXluq4wUazHjmCDBCqXF.:0:0:99999:7:::/root:88888888/g' package/lean/default-settings/files/zzz-default-settings
-# 修改插件名字（修改名字后不知道会不会对插件功能有影响，自己多测试）
-#sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' package/lean/luci-app-flowoffload/po/zh-cn/flowoffload.po
 
 # 修改默认wifi名称ssid为Xiaomi_R4A
 sed -i 's/ssid=OpenWrt/ssid=hallo/g' package/kernel/mac80211/files/lib/wifi/mac80211.sh
-
-# 修改默认wifi密码key为Xiaomi_R4A
-#sed -i 's/encryption=none/encryption=88888888/g' package/kernel/mac80211/files/lib/wifi/mac80211.sh
-#使用sed 在第四行后添加新字
-#sed -e 120a\set wireless.default_radio${devidx}.key=88888888 package/kernel/mac80211/files/lib/wifi/mac80211.sh
-#sed -i '/set wireless.default_radio${devidx}.encryption=psk2/a\set wireless.default_radio${devidx}.key=88888888' package/kernel/mac80211/files/lib/wifi/mac80211.sh
